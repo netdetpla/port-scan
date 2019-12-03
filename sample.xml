@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.40 scan initiated Tue Dec  3 20:58:38 2019 as: nmap -Pn -n -sU -sS -p 1-100 -oX test.xml -vv 114.114.114.114/28 -->
+<nmaprun scanner="nmap" args="nmap -Pn -n -sU -sS -p 1-100 -oX test.xml -vv 114.114.114.114/28" start="1575377918"
+         startstr="Tue Dec  3 20:58:38 2019" version="7.40" xmloutputversion="1.04">
+    <scaninfo type="syn" protocol="tcp" numservices="100" services="1-100"/>
+    <scaninfo type="udp" protocol="udp" numservices="100" services="1-100"/>
+    <verbose level="2"/>
+    <debugging level="0"/>
+    <taskbegin task="SYN Stealth Scan" time="1575377918"/>
+    <taskend task="SYN Stealth Scan" time="1575377943" extrainfo="1600 total ports"/>
+    <taskbegin task="UDP Scan" time="1575377943"/>
+    <taskend task="UDP Scan" time="1575377966" extrainfo="1600 total ports"/>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.112" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.113" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377966">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.114" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="filtered" count="99">
+                <extrareasons reason="no-responses" count="99"/>
+            </extraports>
+            <port protocol="tcp" portid="53">
+                <state state="open" reason="syn-ack" reason_ttl="128"/>
+                <service name="domain" method="table" conf="3"/>
+            </port>
+            <port protocol="udp" portid="53">
+                <state state="open" reason="syn-ack" reason_ttl="128"/>
+                <service name="domain" method="table" conf="3"/>
+            </port>
+        </ports>
+        <times srtt="40023" rttvar="5279" to="100000"/>
+    </host>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.115" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377966">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.116" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.117" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377964">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.118" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.119" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="filtered" count="99">
+                <extrareasons reason="no-responses" count="99"/>
+            </extraports>
+            <port protocol="tcp" portid="53">
+                <state state="open" reason="syn-ack" reason_ttl="128"/>
+                <service name="domain" method="table" conf="3"/>
+            </port>
+        </ports>
+        <times srtt="37914" rttvar="1165" to="100000"/>
+    </host>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.120" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.121" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.122" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377964">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.123" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377964">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.124" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377964">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.125" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.126" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <host starttime="1575377918" endtime="1575377965">
+        <status state="up" reason="user-set" reason_ttl="0"/>
+        <address addr="114.114.114.127" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+            <extraports state="open|filtered" count="100">
+                <extrareasons reason="no-responses" count="100"/>
+            </extraports>
+        </ports>
+    </host>
+    <runstats>
+        <finished time="1575377966" timestr="Tue Dec  3 20:59:26 2019" elapsed="47.66"
+                  summary="Nmap done at Tue Dec  3 20:59:26 2019; 16 IP addresses (16 hosts up) scanned in 47.66 seconds"
+                  exit="success"/>
+        <hosts up="16" down="0" total="16"/>
+    </runstats>
+</nmaprun>
