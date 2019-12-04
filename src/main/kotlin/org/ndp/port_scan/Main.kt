@@ -24,18 +24,19 @@ object Main {
 
     private fun parseParam() {
         val param = File("/tmp/conf/busi.conf").readText().split(";")
-        ips = param[0]
+        val input = File("/input_file")
+        input.writeText(param[0].replace(",", "\n"))
         ports = param[1]
     }
 
     private fun execute() {
-        val command = "nmap -Pn -n -sU -sS -oX result.xml -p $ports $ips"
+        val command = "nmap -Pn -n -sU -sS -oX /result.xml -p $ports -iL /input_file"
         val nmap = Runtime.getRuntime().exec(command)
         nmap.waitFor()
     }
 
     private fun parseMidResult(): Array<String> {
-        val xml = File("./result.xml")
+        val xml = File("/result.xml")
         val doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xml)
         val xPath = XPathFactory.newInstance().newXPath()
         val hosts = xPath.evaluate("//host", doc, XPathConstants.NODESET) as NodeList
