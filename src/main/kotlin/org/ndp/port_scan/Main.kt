@@ -43,15 +43,17 @@ object Main {
             val addr = xPath.evaluate("//@addr", hosts.item(it), XPathConstants.NODE) as Node
             val tcpPorts = xPath.evaluate("//port[@protocol='tcp']", hosts.item(it), XPathConstants.NODESET) as NodeList
             val tcpSet = Array(tcpPorts.length) { tcpIndex ->
-                val portID = xPath.evaluate("/@portid", tcpPorts.item(tcpIndex), XPathConstants.NODE) as Node
-                portID.textContent
+                val portID = xPath.evaluate("/@portid", tcpPorts.item(tcpIndex), XPathConstants.NODE) as? Node
+                portID?.textContent ?: ""
             }
+                    .filter { s -> s == "" }
 
             val udpPorts = xPath.evaluate("//port[@protocol='udp']", hosts.item(it), XPathConstants.NODESET) as NodeList
             val udpSet = Array(udpPorts.length) { udpIndex ->
-                val portID = xPath.evaluate("/@portid", udpPorts.item(udpIndex), XPathConstants.NODE) as Node
-                portID.textContent
+                val portID = xPath.evaluate("/@portid", udpPorts.item(udpIndex), XPathConstants.NODE) as? Node
+                portID?.textContent ?: ""
             }
+                    .filter { s -> s == "" }
             addr.textContent + "," + tcpSet.joinToString("+") + udpSet.joinToString("+")
         }
     }
