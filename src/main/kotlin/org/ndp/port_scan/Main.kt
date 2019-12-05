@@ -14,7 +14,6 @@ object Main {
     private val appStatusDir = File("/tmp/appstatus/")
     private val resultDir = File("/tmp/result/")
     private val resultFile = File("/tmp/result/result")
-    lateinit var ips: String
     lateinit var ports: String
 
     init {
@@ -80,15 +79,8 @@ object Main {
         // 执行
         try {
             execute()
-        } catch (e: Exception) {
-            Log.error(e.toString())
-            e.printStackTrace()
-            errorEnd(e.toString(), 11)
-        }
-        // 解析中间文件
-        val result: Array<String>
-        try {
-            result = parseMidResult()
+            // 解析中间文件
+            val result: Array<String> = parseMidResult()
             // 写结果
             writeResult(result)
         } catch (e: Exception) {
