@@ -29,7 +29,7 @@ object Main {
     }
 
     private fun execute() {
-        val command = "nmap -Pn -n -sU -sS -oX /result.xml -p $ports -iL /input_file"
+        val command = "nmap -Pn -n -sU -sS --open -oX /result.xml -p $ports -iL /input_file"
         val nmap = Runtime.getRuntime().exec(command)
         nmap.waitFor()
     }
@@ -40,21 +40,22 @@ object Main {
         val xPath = XPathFactory.newInstance().newXPath()
         val hosts = xPath.evaluate("//host", doc, XPathConstants.NODESET) as NodeList
         return Array(hosts.length) {
-            val addr = xPath.evaluate("//@addr", hosts.item(it), XPathConstants.NODE) as Node
-            val tcpPorts = xPath.evaluate("//port[@protocol='tcp']", hosts.item(it), XPathConstants.NODESET) as NodeList
+            val addr = xPath.evaluate("//host[${it + 1}]//@addr", doc, XPathConstants.NODE) as Node
+            val tcpPorts =
+                    xPath.evaluate("//host[${it + 1}]//port[@protocol='tcp']", doc, XPathConstants.NODESET) as NodeList
             val tcpSet = Array(tcpPorts.length) { tcpIndex ->
-                val portID = xPath.evaluate("/@portid", tcpPorts.item(tcpIndex), XPathConstants.NODE) as? Node
-                portID?.textContent ?: ""
+                val portID =
+                        xPath.evaluate("//host[${it + 1}]//port[@protocol='tcp'][${tcpIndex + 1}]/@portid", doc, XPathConstants.NODE) as Node
+                portID.textContent
             }
-                    .filter { s -> s == "" }
-
-            val udpPorts = xPath.evaluate("//port[@protocol='udp']", hosts.item(it), XPathConstants.NODESET) as NodeList
+            val udpPorts =
+                    xPath.evaluate("//host[${it + 1}]//port[@protocol='udp']", doc, XPathConstants.NODESET) as NodeList
             val udpSet = Array(udpPorts.length) { udpIndex ->
-                val portID = xPath.evaluate("/@portid", udpPorts.item(udpIndex), XPathConstants.NODE) as? Node
-                portID?.textContent ?: ""
+                val portID =
+                        xPath.evaluate("//host[${it + 1}]//port[@protocol='udp'][${udpIndex + 1}]/@portid", doc, XPathConstants.NODE) as Node
+                portID.textContent
             }
-                    .filter { s -> s == "" }
-            addr.textContent + "," + tcpSet.joinToString("+") + udpSet.joinToString("+")
+            addr.textContent + "," + tcpSet.joinToString("+") + "," + udpSet.joinToString("+")
         }
     }
 
