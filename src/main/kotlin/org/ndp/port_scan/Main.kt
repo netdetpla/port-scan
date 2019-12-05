@@ -29,7 +29,7 @@ object Main {
     }
 
     private fun execute() {
-        val command = "nmap -Pn -n -sU -sS --open -oX /result.xml -p $ports -iL /input_file"
+        val command = "nmap -Pn -n -sSUV --open -oX /result.xml -p $ports -iL /input_file"
         val nmap = Runtime.getRuntime().exec(command)
         nmap.waitFor()
     }

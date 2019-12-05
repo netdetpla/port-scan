@@ -1,5 +1,4 @@
-package org.ndp.port_scan.bean
-
-class Host {
-
-}
+class Host (
+    val address: String,
+    val ports: Array<Port>
+)
