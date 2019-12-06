@@ -1,0 +1,40 @@
+[
+  {
+    "address": "114.114.114.114",
+    "ports": [
+      {
+        "protocol": "tcp",
+        "portID": "53",
+        "state": "open",
+        "service": "domain",
+        "product": "unknown"
+      },
+      {
+        "protocol": "udp",
+        "portID": "53",
+        "state": "open",
+        "service": "domain",
+        "product": "Microsoft DNS"
+      }
+    ]
+  },
+  {
+    "address": "114.114.114.119",
+    "ports": [
+      {
+        "protocol": "tcp",
+        "portID": "53",
+        "state": "open",
+        "service": "domain",
+        "product": "unknown"
+      },
+      {
+        "protocol": "udp",
+        "portID": "53",
+        "state": "open",
+        "service": "domain",
+        "product": "Microsoft DNS"
+      }
+    ]
+  }
+]
