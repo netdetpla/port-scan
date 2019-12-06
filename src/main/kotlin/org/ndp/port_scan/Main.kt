@@ -1,5 +1,9 @@
 package org.ndp.port_scan
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import org.ndp.port_scan.bean.Host
+import org.ndp.port_scan.bean.Port
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import java.io.File
@@ -14,7 +18,8 @@ object Main {
     private val appStatusDir = File("/tmp/appstatus/")
     private val resultDir = File("/tmp/result/")
     private val resultFile = File("/tmp/result/result")
-    lateinit var ports: String
+    private lateinit var ports: String
+    private val xPath = XPathFactory.newInstance().newXPath()
 
     init {
         appStatusDir.mkdirs()
@@ -34,33 +39,56 @@ object Main {
         nmap.waitFor()
     }
 
-    private fun parseMidResult(): Array<String> {
+    private fun parseMidResult(): String {
         val xml = File("/result.xml")
         val doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xml)
-        val xPath = XPathFactory.newInstance().newXPath()
-        val hosts = xPath.evaluate("//host", doc, XPathConstants.NODESET) as NodeList
-        return Array(hosts.length) {
-            val addr = xPath.evaluate("//host[${it + 1}]//@addr", doc, XPathConstants.NODE) as Node
-            val tcpPorts =
-                    xPath.evaluate("//host[${it + 1}]//port[@protocol='tcp']", doc, XPathConstants.NODESET) as NodeList
-            val tcpSet = Array(tcpPorts.length) { tcpIndex ->
-                val portID =
-                        xPath.evaluate("//host[${it + 1}]//port[@protocol='tcp'][${tcpIndex + 1}]/@portid", doc, XPathConstants.NODE) as Node
-                portID.textContent
+        val hostNodes = xPath.evaluate("//host", doc, XPathConstants.NODESET) as NodeList
+        val hosts = ArrayList<Host>()
+        for (i in 1..hostNodes.length) {
+            val addr = (xPath.evaluate("//host[$i]//@addr", doc, XPathConstants.NODE) as Node).textContent
+            val portNodes = xPath.evaluate("//host[$i]//port", doc, XPathConstants.NODESET) as NodeList
+            val ports = ArrayList<Port>()
+            for (j in 1..portNodes.length) {
+                val state = (xPath.evaluate(
+                        "//host[$i]/ports/port[$j]/state/@state",
+                        doc,
+                        XPathConstants.NODE
+                ) as Node).textContent
+                if (state != "open")
+                    continue
+                val protocol = (xPath.evaluate(
+                        "//host[$i]/ports/port[$j]/@protocol",
+                        doc,
+                        XPathConstants.NODE
+                ) as Node).textContent
+                val portID = (xPath.evaluate(
+                        "//host[$i]/ports/port[$j]/@portid",
+                        doc,
+                        XPathConstants.NODE
+                ) as Node).textContent
+                val service = (xPath.evaluate(
+                        "//host[$i]/ports/port[$j]/service/@name",
+                        doc,
+                        XPathConstants.NODE
+                ) as Node).textContent
+                val product = (xPath.evaluate(
+                        "//host[$i]/ports/port[$j]/service/@product",
+                        doc,
+                        XPathConstants.NODE
+                ) as? Node)?.textContent ?: "unknown"
+                ports.add(Port(protocol, portID, state, service, product))
             }
-            val udpPorts =
-                    xPath.evaluate("//host[${it + 1}]//port[@protocol='udp']", doc, XPathConstants.NODESET) as NodeList
-            val udpSet = Array(udpPorts.length) { udpIndex ->
-                val portID =
-                        xPath.evaluate("//host[${it + 1}]//port[@protocol='udp'][${udpIndex + 1}]/@portid", doc, XPathConstants.NODE) as Node
-                portID.textContent
+            if (ports.size > 0) {
+                hosts.add(Host(addr, ports))
             }
-            addr.textContent + "," + tcpSet.joinToString("+") + "," + udpSet.joinToString("+")
         }
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        val adapter = moshi.adapter(List::class.java)
+        return adapter.toJson(hosts)
     }
 
-    private fun writeResult(result: Array<String>) {
-        resultFile.writeText(result.joinToString(";"))
+    private fun writeResult(result: String) {
+        resultFile.writeText(result)
     }
 
     private fun successEnd() {
@@ -82,10 +110,8 @@ object Main {
         // 执行
         try {
             execute()
-            // 解析中间文件
-            val result: Array<String> = parseMidResult()
-            // 写结果
-            writeResult(result)
+            // 解析中间文件，写结果
+            writeResult(parseMidResult())
         } catch (e: Exception) {
             Log.error(e.toString())
             e.printStackTrace()
