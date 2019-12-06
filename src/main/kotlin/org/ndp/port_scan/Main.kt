@@ -42,6 +42,7 @@ object Main {
         )
         nmapBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT)
         nmapBuilder.redirectError(ProcessBuilder.Redirect.INHERIT)
+        nmapBuilder.directory(File("/"))
         val nmap = nmapBuilder.start()
         nmap.waitFor()
         Log.info("nmap end")
