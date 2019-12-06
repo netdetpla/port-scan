@@ -37,7 +37,7 @@ object Main {
 
     private fun execute() {
         Log.info("nmap start")
-        val nmapBuilder = ProcessBuilder(
+        val nmapBuilder = ProcessBuilder("/bin/bash", "-c",
                 "nmap -Pn -n -sSV --open -vv -oX /result.xml -p $ports -iL /input_file"
         )
         nmapBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT)

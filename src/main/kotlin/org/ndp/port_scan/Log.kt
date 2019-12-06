@@ -9,10 +9,10 @@ object Log {
     private const val ANSI_GREEN = "\u001B[32m"
     private const val ANSI_YELLOW = "\u001B[33m"
     private const val ANSI_BLUE = "\u001B[34m"
-    private const val DEBU = "[DEBUG]$ANSI_RESET"
+    private const val DEBU = "[DEBU]$ANSI_RESET"
     private const val INFO = "[INFO]$ANSI_RESET"
     private const val WARN = "[WARN]$ANSI_RESET"
-    private const val ERRO = "[ERROR]$ANSI_RESET"
+    private const val ERRO = "[ERRO]$ANSI_RESET"
 
     private fun getDatetime(): String {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
