@@ -7,7 +7,6 @@ import org.ndp.port_scan.bean.Port
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import java.io.File
-import java.lang.Exception
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.xpath.XPathConstants
 import javax.xml.xpath.XPathFactory
@@ -31,15 +30,25 @@ object Main {
         val input = File("/input_file")
         input.writeText(param[0].replace(",", "\n"))
         ports = param[1]
+        Log.debug("params: ")
+        Log.debug(param[0])
+        Log.debug(ports)
     }
 
     private fun execute() {
-        val command = "nmap -Pn -n -sSUV --open -oX /result.xml -p $ports -iL /input_file"
-        val nmap = Runtime.getRuntime().exec(command)
+        Log.info("nmap start")
+        val nmapBuilder = ProcessBuilder(
+                "nmap -Pn -n -sSV --open -vv -oX /result.xml -p $ports -iL /input_file"
+        )
+        nmapBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT)
+        nmapBuilder.redirectError(ProcessBuilder.Redirect.INHERIT)
+        val nmap = nmapBuilder.start()
         nmap.waitFor()
+        Log.info("nmap end")
     }
 
     private fun parseMidResult(): String {
+        Log.info("parsing the result of nmap")
         val xml = File("/result.xml")
         val doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xml)
         val hostNodes = xPath.evaluate("//host", doc, XPathConstants.NODESET) as NodeList
@@ -84,10 +93,14 @@ object Main {
         }
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         val adapter = moshi.adapter(List::class.java)
+        Log.info("finished parsing")
         return adapter.toJson(hosts)
     }
 
     private fun writeResult(result: String) {
+        Log.debug("result: ")
+        Log.debug(result)
+        Log.info("writing result file")
         resultFile.writeText(result)
     }
 
@@ -119,5 +132,6 @@ object Main {
         }
         // 结束
         successEnd()
+        Log.info("port-scan end successfully")
     }
 }
