@@ -37,9 +37,10 @@ object Main {
 
     private fun execute() {
         Log.info("nmap start")
-        val nmapBuilder = ProcessBuilder(
-                "nmap -Pn -n -sSV -O --open -vv -oX /result.xml -p $ports -iL /input_file".split(" ")
-        )
+//        val nmapBuilder = ProcessBuilder("/bin/bash", "-c",
+//                "\"nmap -Pn -n -sSV --open -vv -oX /result.xml -p $ports -iL /input_file\""
+//        )
+        val nmapBuilder = ProcessBuilder("nmap -Pn -n -sSV --open -vv -oX /result.xml -p $ports -iL /input_file".split(" "))
         nmapBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT)
         nmapBuilder.redirectError(ProcessBuilder.Redirect.INHERIT)
         nmapBuilder.directory(File("/"))
@@ -56,10 +57,6 @@ object Main {
         val hosts = ArrayList<Host>()
         for (i in 1..hostNodes.length) {
             val addr = (xPath.evaluate("//host[$i]//@addr", doc, XPathConstants.NODE) as Node).textContent
-            val os = (xPath.evaluate("//host[$i]//osmatch/@name", doc, XPathConstants.NODE) as? Node)
-                    ?.textContent ?: "unknown"
-            val hardware = (xPath.evaluate("//host[$i]//osclass/@type", doc, XPathConstants.NODE) as? Node)
-                    ?.textContent ?: "unknown"
             val portNodes = xPath.evaluate("//host[$i]//port", doc, XPathConstants.NODESET) as NodeList
             val ports = ArrayList<Port>()
             for (j in 1..portNodes.length) {
@@ -93,7 +90,7 @@ object Main {
                 ports.add(Port(protocol, portID, state, service, product))
             }
             if (ports.size > 0) {
-                hosts.add(Host(addr, os, hardware, ports))
+                hosts.add(Host(addr, ports))
             }
         }
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
